@@ -73,6 +73,12 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             }
         });
 
+        tabs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabsMouseClicked(evt);
+            }
+        });
+
         jPanel4.setLayout(null);
 
         jScroll.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -431,7 +437,9 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
         // TODO add your handling code here:
-
+        if (evt.getClickCount() == 2) {
+            this.edit();
+        }
     }//GEN-LAST:event_tblUsersMouseClicked
 
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
@@ -495,14 +503,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     private void jScrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            this.edit();
-        }
     }//GEN-LAST:event_jScrollMouseClicked
 
     private void rdoManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoManagerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdoManagerActionPerformed
+
+    private void tabsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabsMouseClicked
 
     /**
      * @param args the command line arguments
