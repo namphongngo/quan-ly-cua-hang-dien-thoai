@@ -1,15 +1,15 @@
 package poly.phone.ui.manager;
 
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
-import poly.cafe.util.XDialog;
+import poly.phone.util.XDialog;
 import poly.phone.dao.UserDAO;
 import poly.phone.dao.impl.UserDAOImpl;
 import poly.phone.entity.User;
 
-public class UserManagerJDialog extends javax.swing.JDialog {
+public class UserManagerJDialog extends javax.swing.JDialog implements UserController {
 
-    
     public UserManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -24,10 +24,14 @@ public class UserManagerJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jLabel7 = new javax.swing.JLabel();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         tabs = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        tblUsers = new javax.swing.JScrollPane();
-        tblCategories = new javax.swing.JTable();
+        jScroll = new javax.swing.JScrollPane();
+        tblUsers = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
@@ -54,10 +58,13 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         txtUsername = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
-        pnlPhoto = new javax.swing.JPanel();
+        JPanel = new javax.swing.JPanel();
+        pnlPhoto = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        rdoQuanly = new javax.swing.JRadioButton();
+        rdoStaff = new javax.swing.JRadioButton();
         rdoManager = new javax.swing.JRadioButton();
+
+        jLabel7.setText("jLabel7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -68,13 +75,13 @@ public class UserManagerJDialog extends javax.swing.JDialog {
 
         jPanel4.setLayout(null);
 
-        tblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+        jScroll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblUsersMouseClicked(evt);
+                jScrollMouseClicked(evt);
             }
         });
 
-        tblCategories.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -93,24 +100,24 @@ public class UserManagerJDialog extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        tblCategories.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tblUsers.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tblCategoriesAncestorAdded(evt);
+                tblUsersAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCategoriesMouseClicked(evt);
+                tblUsersMouseClicked(evt);
             }
         });
-        tblUsers.setViewportView(tblCategories);
+        jScroll.setViewportView(tblUsers);
 
-        jPanel4.add(tblUsers);
-        tblUsers.setBounds(0, 0, 657, 296);
+        jPanel4.add(jScroll);
+        jScroll.setBounds(0, 0, 657, 296);
 
         jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -160,7 +167,7 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         );
 
         jPanel4.add(jPanel6);
-        jPanel6.setBounds(12, 302, 671, 50);
+        jPanel6.setBounds(12, 302, 674, 50);
         jPanel4.add(jScrollBar1);
         jScrollBar1.setBounds(663, 0, 10, 296);
 
@@ -267,8 +274,10 @@ public class UserManagerJDialog extends javax.swing.JDialog {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
+        buttonGroup2.add(rdoEnabled);
         rdoEnabled.setText("Hoạt động");
 
+        buttonGroup2.add(rdotamdung);
         rdotamdung.setText("Tạm dừng");
 
         jLabel3.setText("Xác nhận mật khẩu");
@@ -277,23 +286,25 @@ public class UserManagerJDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Họ và tên");
 
-        pnlPhoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+        JPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 
-        javax.swing.GroupLayout pnlPhotoLayout = new javax.swing.GroupLayout(pnlPhoto);
-        pnlPhoto.setLayout(pnlPhotoLayout);
-        pnlPhotoLayout.setHorizontalGroup(
-            pnlPhotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+        javax.swing.GroupLayout JPanelLayout = new javax.swing.GroupLayout(JPanel);
+        JPanel.setLayout(JPanelLayout);
+        JPanelLayout.setHorizontalGroup(
+            JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
-        pnlPhotoLayout.setVerticalGroup(
-            pnlPhotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 244, Short.MAX_VALUE)
+        JPanelLayout.setVerticalGroup(
+            JPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
         );
 
         jLabel6.setText("Vai trò");
 
-        rdoQuanly.setText("Quản lý");
+        buttonGroup1.add(rdoStaff);
+        rdoStaff.setText("Quản lý");
 
+        buttonGroup1.add(rdoManager);
         rdoManager.setText("Nhân viên");
         rdoManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,11 +320,10 @@ public class UserManagerJDialog extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -324,12 +334,12 @@ public class UserManagerJDialog extends javax.swing.JDialog {
                                     .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel6)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(rdoQuanly)
+                                .addComponent(rdoStaff)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rdoManager)))
                         .addGap(18, 18, 18))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(23, 23, 23)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,9 +358,9 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -380,12 +390,10 @@ public class UserManagerJDialog extends javax.swing.JDialog {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(rdoQuanly)
+                                    .addComponent(rdoStaff)
                                     .addComponent(rdoManager)))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(pnlPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                    .addComponent(JPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -416,15 +424,15 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblCategoriesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblCategoriesAncestorAdded
+    private void tblUsersAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblUsersAncestorAdded
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_tblCategoriesAncestorAdded
+    }//GEN-LAST:event_tblUsersAncestorAdded
 
-    private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
+    private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_tblCategoriesMouseClicked
+    }//GEN-LAST:event_tblUsersMouseClicked
 
     private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
         // TODO add your handling code here:
@@ -485,12 +493,12 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         this.open();
     }//GEN-LAST:event_formWindowOpened
 
-    private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
+    private void jScrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             this.edit();
         }
-    }//GEN-LAST:event_tblUsersMouseClicked
+    }//GEN-LAST:event_jScrollMouseClicked
 
     private void rdoManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoManagerActionPerformed
         // TODO add your handling code here:
@@ -539,6 +547,7 @@ public class UserManagerJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPanel;
     private javax.swing.JButton btnCheckAll;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnCreate;
@@ -550,25 +559,29 @@ public class UserManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnMovePrevious;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScroll;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JPanel pnlPhoto;
+    private javax.swing.JLabel pnlPhoto;
     private javax.swing.JRadioButton rdoEnabled;
     private javax.swing.JRadioButton rdoManager;
-    private javax.swing.JRadioButton rdoQuanly;
+    private javax.swing.JRadioButton rdoStaff;
     private javax.swing.JRadioButton rdotamdung;
     private javax.swing.JTabbedPane tabs;
-    private javax.swing.JTable tblCategories;
-    private javax.swing.JScrollPane tblUsers;
+    private javax.swing.JTable tblUsers;
     private javax.swing.JTextField txtConfirm;
     private javax.swing.JTextField txtFullname;
     private javax.swing.JTextField txtPassword;
@@ -621,6 +634,7 @@ public class UserManagerJDialog extends javax.swing.JDialog {
     public void uncheckAll() {
         this.setCheckedAll(false);
     }
+
     private void setCheckedAll(boolean checked) {
         for (int i = 0; i < tblUsers.getRowCount(); i++) {
             tblUsers.setValueAt(checked, i, 6);
@@ -644,21 +658,43 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         txtUsername.setText(entity.getUsername());
         txtPassword.setText(entity.getPassword());
         txtConfirm.setText(entity.getPassword());
-        rdoEnabled.setIndex(entity.isEnabled() ? 0 : 1);
+
+        // Sửa: nếu rdoEnabled là JCheckBox hoặc JRadioButton
+        rdoEnabled.setSelected(entity.isEnabled());
+
         txtFullname.setText(entity.getFullname());
-        pnlPhoto.setIcon(entity.getPhoto());
-        rdoManager.setIndex(entity.isManager() ? 0 : 1);
+
+        // Sửa: setIcon đúng kiểu ImageIcon cho JLabel
+        if (entity.getPhoto() != null && !entity.getPhoto().isEmpty()) {
+            pnlPhoto.setIcon(new ImageIcon("images/" + entity.getPhoto()));
+            pnlPhoto.setToolTipText(entity.getPhoto());
+        } else {
+            pnlPhoto.setIcon(null);
+            pnlPhoto.setToolTipText(null);
+        }
+
+        // Sửa: dùng setSelected cho rdoManager và rdoStaff
+        rdoManager.setSelected(entity.isManager());
+        rdoStaff.setSelected(!entity.isManager());
     }
 
     @Override
     public User getForm() {
         User entity = new User();
         entity.setUsername(txtUsername.getText());
-        entity.setPassword(new String(txtPassword.getPassword()));
-        entity.setEnabled(rdoEnabled.getIndex() == 0);
+        entity.setPassword(new String(txtPassword.getText()));
+
+        // Sửa: dùng isSelected thay vì getIndex()
+        entity.setEnabled(rdoEnabled.isSelected());
+
         entity.setFullname(txtFullname.getText());
-        entity.setPhoto(pnlPhoto.getIcon());
-        entity.setManager(rdoManager.getIndex() == 0);
+
+        // Sửa: lấy tên file ảnh từ tooltip
+        entity.setPhoto(pnlPhoto.getToolTipText());
+
+        // Sửa: dùng isSelected để biết có phải là Manager không
+        entity.setManager(rdoManager.isSelected());
+
         return entity;
     }
 
@@ -736,7 +772,8 @@ public class UserManagerJDialog extends javax.swing.JDialog {
         } else {
             tblUsers.clearSelection();
             tblUsers.setRowSelectionInterval(index, index);
-            this.edit();
+            this.edit(); // gọi phương thức edit để đổ dữ liệu lên form
         }
     }
+
 }
