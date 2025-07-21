@@ -438,7 +438,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            this.edit();
+            int row = tblUsers.getSelectedRow();
+            if (row >= 0) {
+                this.edit(); // hiện thông tin lên form
+                tabs.setSelectedIndex(2); // chuyển sang tab "BIỂU MẪU"
+            }
         }
     }//GEN-LAST:event_tblUsersMouseClicked
 
