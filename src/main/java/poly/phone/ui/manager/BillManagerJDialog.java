@@ -3,30 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package poly.phone.ui.manager;
+
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import poly.phone.dao.BillDAO;
 import poly.phone.dao.BillDetailDAO;
 import poly.phone.dao.impl.BillDAOImpl;
+import poly.phone.dao.impl.BillDetailDAOImpl;
 import poly.phone.entity.Bill;
 import poly.phone.entity.BillDetail;
-import poly.phone.util.TimeRange;
 import poly.phone.util.XDate;
 import poly.phone.util.XDialog;
-import poly.phone.dao.impl.BillDetailDAOImpl;
-/**
- *
- * @author Nam Phong
- */
+
 public class BillManagerJDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form BillManagerJDialog
-     */
+    private final BillDAO billDAO = new BillDAOImpl();
+    private final BillDetailDAO billDetailDAO = new BillDetailDAOImpl();
+    private int currentIndex = -1;
+
     public BillManagerJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        loadTable();
     }
 
     /**
@@ -587,17 +586,21 @@ public class BillManagerJDialog extends javax.swing.JDialog {
     }
 
     private void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        currentIndex = tblBills.getRowCount() - 1;
+        showBill();
     }
 
     private void moveLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        currentIndex = tblBills.getRowCount() - 1;
+        showBill();
     }
 
     private void moveNext() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (currentIndex < tblBills.getRowCount() - 1) {
+            currentIndex++;
+            showBill();
+        }
     }
-
     private void moveFirst() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -613,4 +616,32 @@ public class BillManagerJDialog extends javax.swing.JDialog {
     private void movePrevious() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-}
+
+    private void loadTable() {
+        List<Bill> list = billDAO.selectAll();
+        DefaultTableModel model = (DefaultTableModel) tblBills.getModel();
+        model.setRowCount(0);
+        for (Bill b : list) {
+            model.addRow(new Object[]{b.getId(), b.getUsername(), b.getStatus(), b.getCheckoutDate()});
+        }
+    }
+
+    private void showBill() {
+        int id = (Integer) tblBills.getValueAt(currentIndex, 0);
+        Bill b = billDAO.selectById(id);
+        setForm(b);
+        loadBillDetails(id);
+    }
+
+    private void setForm(Bill b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void loadBillDetails(int billId) {
+        List<BillDetail> list = billDetailDAO.selectByBillId(billId);
+        DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
+        model.setRowCount(0);
+        for (BillDetail bd : list) {
+            model.addRow(new Object[]{bd.getProductId(), bd.getQuantity(), bd.getPrice()});
+        }}}
+    
