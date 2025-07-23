@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
-package poly.phone.dao;
+package poly.cafe.dao;
 
-import java.util.List;
-import poly.phone.entity.Product;
-/**
- *
- * @author Nam Phong
- */
+
+import poly.cafe.entity.Product;
+
 public interface ProductDAO extends CrudDAO<Product, String>{
-        List<Product> findByCategoryId(String categoryId);
+    
 }
