@@ -3,13 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package poly.phone.ui.manager;
-
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import poly.phone.dao.CategoryDAO;
+import poly.phone.dao.impl.CategoryDAOImpl;
+import poly.phone.entity.Category;
+import poly.phone.util.XDialog;
 /**
  *
  * @author Nam Phong
  */
-public class CategoryManagerJDialog extends javax.swing.JDialog {
-
+public class CategoryManagerJDialog extends javax.swing.JDialog implements CategoryController{
+    CategoryDAO dao = new CategoryDAOImpl();
+    List<Category> items = List.of();
     /**
      * Creates new form CategoryManagerJDialog
      */
@@ -17,7 +23,132 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+        this.fillToTable();
+        this.clear();
+    }
 
+    @Override
+    public void fillToTable() {
+    DefaultTableModel model = (DefaultTableModel) tblDienThoai.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+        items.forEach(item -> {
+            System.out.println("Số lượng items lấy được: " + items.size());
+            Object[] rowData = {
+                item.getId(),
+                item.getName(),
+                false
+            };
+            model.addRow(rowData);
+        });
+    }
+
+    @Override
+    public void edit() {
+        Category entity = items.get(tblDienThoai.getSelectedRow());
+        this.setForm(entity);
+        this.setEditable(true);
+        tabs.setSelectedIndex(1);
+    }
+
+    @Override public void checkAll() { this.setCheckedAll(true); }
+    @Override public void uncheckAll() { this.setCheckedAll(false); }
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblDienThoai.getRowCount(); i++) {
+            tblDienThoai.setValueAt(checked, i, 2);
+        }
+    }
+
+    @Override
+    public void deleteCheckedItems() {
+        if (XDialog.confirm("Bạn thực sự muốn xóa các mục chọn?")) {
+            for (int i = 0; i < tblDienThoai.getRowCount(); i++) {
+                if ((Boolean) tblDienThoai.getValueAt(i, 2)) {
+                    dao.deleteById(items.get(i).getId());
+                }
+            }
+            this.fillToTable();
+        }
+    }
+
+    @Override
+    public void setForm(Category entity) {
+        txtMaDienThoai.setText(entity.getId());
+        txtTenDienThoai.setText(entity.getName());
+    }
+
+    @Override
+    public Category getForm() {
+        Category entity = new Category();
+        entity.setId(txtMaDienThoai.getText());
+        entity.setName(txtTenDienThoai.getText());
+        return entity;
+    }
+
+    @Override
+    public void create() {
+        Category entity = this.getForm();
+        dao.create(entity);
+        this.fillToTable();
+        this.clear();
+    }
+
+    @Override
+    public void update() {
+        Category entity = this.getForm();
+        dao.update(entity);
+        this.fillToTable();
+    }
+
+    @Override
+    public void delete() {
+        if (XDialog.confirm("Bạn thực sự muốn xóa?")) {
+            String id = txtMaDienThoai.getText();
+            dao.deleteById(id);
+            this.fillToTable();
+            this.clear();
+        }
+    }
+
+    @Override
+    public void clear() {
+        this.setForm(new Category());
+        this.setEditable(false);
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        txtTenDienThoai.setEnabled(!editable);
+        btnCreate.setEnabled(!editable);
+        btnUpdate.setEnabled(editable);
+        btnDelete.setEnabled(editable);
+
+        int rowCount = tblDienThoai.getRowCount();
+        btnMoveFirst.setEnabled(editable && rowCount > 0);
+        btnMovePrevious.setEnabled(editable && rowCount > 0);
+        btnMoveNext.setEnabled(editable && rowCount > 0);
+        btnMoveLast.setEnabled(editable && rowCount > 0);
+    }
+    @Override public void moveFirst() { this.moveTo(0);}
+    @Override public void movePrevious() { this.moveTo(tblDienThoai.getSelectedRow() - 1); }
+    @Override public void moveNext() { this.moveTo(tblDienThoai.getSelectedRow() + 1); }
+    @Override public void moveLast() { this.moveTo(tblDienThoai.getRowCount() - 1); }
+    @Override
+    public void moveTo(int index) {
+        if (index < 0) {
+            this.moveLast();
+        } else if (index >= tblDienThoai.getRowCount()) {
+            this.moveFirst();
+        } else {
+            tblDienThoai.clearSelection();
+            tblDienThoai.setRowSelectionInterval(index, index);
+            this.edit();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +158,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDienThoai = new javax.swing.JTable();
@@ -109,7 +240,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Danh sách", jPanel1);
+        tabs.addTab("Danh sách", jPanel1);
 
         jLabel1.setText("Mã điện thoại");
 
@@ -196,20 +327,21 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTenDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnResetForm, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnMoveLast)
                         .addComponent(btnMoveNext)
                         .addComponent(btnMovePrevious)
-                        .addComponent(btnMoveFirst)))
+                        .addComponent(btnMoveFirst))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCreate)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete)
+                        .addComponent(btnResetForm, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(62, 62, 62))
         );
 
-        jTabbedPane1.addTab("Biểu mẫu", jPanel2);
+        tabs.addTab("Biểu mẫu", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,13 +349,13 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -309,25 +441,25 @@ public class CategoryManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblDienThoai;
     private javax.swing.JTextField txtMaDienThoai;
     private javax.swing.JTextField txtTenDienThoai;
     // End of variables declaration//GEN-END:variables
 
-    private void moveFirst() {
+    public void moveFirst() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private void movePrevious() {
+    public void movePrevious() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private void moveNext() {
+    public void moveNext() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private void moveLast() {
+    public void moveLast() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
