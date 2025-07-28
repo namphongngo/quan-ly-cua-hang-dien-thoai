@@ -1,14 +1,14 @@
-package poly.cafe.ui.manager;
+package poly.phone.ui.manager;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-import poly.cafe.dao.impl.ProductDAOImpl;
+import poly.phone.dao.impl.ProductDAOImpl;
 
-import poly.cafe.entity.Product;
-import poly.cafe.util.XDialog;
-import poly.cafe.util.XDate;
-import poly.cafe.dao.ProductDAO;
+import poly.phone.entity.Product;
+import poly.phone.util.XDialog;
+import poly.phone.util.XDate;
+import poly.phone.dao.ProductDAO;
 
 public class ProductManagerJDialog extends javax.swing.JDialog implements ProductController {
 
@@ -144,7 +144,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                     .addComponent(btnDeleteCheckedItems)
                     .addComponent(btnUncheckAll)
                     .addComponent(btnCheckAll))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         tabs.addTab("Danh sách", jPanel1);
@@ -256,7 +256,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTyLeGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnUpdate)
@@ -291,8 +291,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs)
-                .addContainerGap())
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))
         );
 
         pack();

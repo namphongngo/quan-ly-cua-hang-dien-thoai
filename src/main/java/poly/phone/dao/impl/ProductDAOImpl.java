@@ -1,58 +1,61 @@
-package poly.cafe.dao.impl;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package poly.phone.dao.impl;
 
 import java.util.List;
-import poly.cafe.entity.Product;
-import poly.cafe.util.XJdbc;
-import poly.cafe.util.XQuery;
-import poly.cafe.dao.ProductDAO;
-
+import poly.phone.entity.Product;
+import poly.phone.util.XJdbc;
+import poly.phone.util.XQuery;
+import poly.phone.dao.ProductDAO;
+/**
+ *
+ * @author Nam Phong
+ */
 public class ProductDAOImpl implements ProductDAO {
-
-  
-private final String createSql = "INSERT INTO KhuyenMai (LoaiDienThoai, TenSanPham, NgayBatDau, NgayKetThuc, TyLeGiamGia) VALUES (?, ?, ?, ?, ?)";
-private final String updateSql = "UPDATE KhuyenMai SET NgayBatDau=?, NgayKetThuc=?, TyLeGiamGia=? WHERE LoaiDienThoai=? AND TenSanPham=?";
-private final String deleteByIdSql = "DELETE FROM KhuyenMai WHERE LoaiDienThoai=? AND TenSanPham=?";
-private final String findAllSql = "SELECT * FROM KhuyenMai";
-private final String findByIdSql = findAllSql + " WHERE LoaiDienThoai=? AND TenSanPham=?";
-
+    private static final String CREATE_SQL = "INSERT INTO Products(Id, Name, Image, UnitPrice, Discount, Available, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_SQL = "UPDATE Products SET Name=?, Image=?, UnitPrice=?, Discount=?, Available=?, CategoryId=? WHERE Id=?";
+    private static final String DELETE_SQL = "DELETE FROM Products WHERE Id=?";
+    private static final String FIND_ALL_SQL = "SELECT * FROM Products";
+    private static final String FIND_BY_ID_SQL = "SELECT * FROM Products WHERE Id=?";
+    
+    private static final String FIND_BY_CATEGORY_ID_SQL = "SELECT * FROM Products WHERE CategoryId=?";
 
     @Override
     public Product create(Product entity) {
         Object[] values = {
-            entity.getLoaidienthoai(),
-            entity.getTensanpham(),
-            entity.getNgayBatDau(),
-            entity.getNgayKetThuc(),
-            entity.getTyLeGiamGia()
+            entity.getId(),
+            entity.getName(),
+            entity.getImage(),
+            entity.getUnitPrice(),
+            entity.getDiscount(),
+            entity.isAvailable(),
+            entity.getCategoryId()
         };
-        XJdbc.executeUpdate(createSql, values);
+        XJdbc.executeUpdate(CREATE_SQL, values);
         return entity;
     }
 
     @Override
     public void update(Product entity) {
         Object[] values = {
-            entity.getLoaidienthoai(),     // 1
-            entity.getTensanpham(),        // 2
-            entity.getNgayBatDau(),        // 3
-            entity.getNgayKetThuc(),       // 4
-            entity.getTyLeGiamGia()     // 5
+            entity.getName(),
+            entity.getImage(),
+            entity.getUnitPrice(),
+            entity.getDiscount(),
+            entity.isAvailable(),
+            entity.getCategoryId(),
+            entity.getId()
         };
-        XJdbc.executeUpdate(updateSql, values);
+        XJdbc.executeUpdate(UPDATE_SQL, values);
     }
-
     @Override
-    public void deleteById(String maChuongTrinh) {
-        XJdbc.executeUpdate(deleteByIdSql, maChuongTrinh);
-    }
-
+    public void deleteById(String id) {XJdbc.executeUpdate(DELETE_SQL, id);}
     @Override
-    public List<Product> findAll() {
-        return XQuery.getBeanList(Product.class, findAllSql);
-    }
-
+    public List<Product> findAll() {return XQuery.getBeanList(Product.class, FIND_ALL_SQL);}
     @Override
-    public Product findById(String maChuongTrinh) {
-        return XQuery.getSingleBean(Product.class, findByIdSql, maChuongTrinh);
-    }
+    public Product findById(String id) {return XQuery.getSingleBean(Product.class, FIND_BY_ID_SQL, id);}    
+    @Override
+    public List<Product> findByCategoryId(String categoryId) {return XQuery.getBeanList(Product.class, FIND_BY_CATEGORY_ID_SQL, categoryId);}
 }
