@@ -11,6 +11,6 @@ import poly.phone.entity.BillDetail;
  * @author Nam Phong
  */
 public interface BillDetailDAO extends CrudDAO<BillDetail, Long>{
-        List<BillDetail> findByBillId(Long billId);
-    List<BillDetail> findByDrinkId(String productsId);
+    List<BillDetail> findByBillId(Long billId);
+    List<BillDetail> findByProductId(String productId);
 }
