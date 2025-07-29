@@ -27,6 +27,6 @@ public class Bill {
     public int status;
     
     public enum Status {
-        Servicing, Completed, Canceled
-    }
+    Servicing, Completed, Canceled
+}
 }

@@ -3,7 +3,6 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Phi&#x1ebf;u B&#xe1;n H&#xe0;ng"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -170,7 +169,7 @@
               <Table columnCount="7" rowCount="4">
                 <Column editable="true" title="" type="java.lang.Boolean"/>
                 <Column editable="true" title="M&#xe3; phi&#x1ebf;u" type="java.lang.Object"/>
-                <Column editable="true" title="S&#x1ea3;n Ph&#x1ea9;m" type="java.lang.Object"/>
+                <Column editable="true" title="&#x110;i&#x1ec7;n tho&#x1ea1;i" type="java.lang.Object"/>
                 <Column editable="true" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
                 <Column editable="true" title="Gi&#x1ea3;m gi&#xe1;" type="java.lang.Object"/>
                 <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
@@ -228,7 +227,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnRemove">
       <Properties>
-        <Property name="text" type="java.lang.String" value="X&#xf3;a S&#x1ea3;n Ph&#x1ea9;m"/>
+        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveActionPerformed"/>
@@ -236,7 +235,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAdd">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m S&#x1ea3;n Ph&#x1ea9;m"/>
+        <Property name="text" type="java.lang.String" value="Th&#xea;m &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>

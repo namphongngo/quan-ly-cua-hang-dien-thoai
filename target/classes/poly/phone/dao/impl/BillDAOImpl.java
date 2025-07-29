@@ -16,7 +16,7 @@ import poly.phone.util.XQuery;
  * @author Nam Phong
  */
 public class BillDAOImpl implements BillDAO {
-        private static final String CREATE_SQL = "INSERT INTO Bills( Username, CardId, Checkin, Checkout, Status) VALUES(?, ?, ?, ?, ?)";
+    private static final String CREATE_SQL = "INSERT INTO Bills( Username, CardId, Checkin, Checkout, Status) VALUES(?, ?, ?, ?, ?)";
     private static final String UPDATE_SQL = "UPDATE Bills SET Username=?, CardId=?, Checkin=?, Checkout=?, Status=? WHERE Id=?";
     private static final String DELETE_SQL = "DELETE FROM Bills WHERE Id=?";
     private static final String FIND_ALL_SQL = "SELECT * FROM Bills";
@@ -86,3 +86,4 @@ public class BillDAOImpl implements BillDAO {
         return XQuery.getBeanList(Bill.class, sql, username, begin, end);
     }
 }
+

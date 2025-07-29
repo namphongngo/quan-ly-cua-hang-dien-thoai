@@ -20,7 +20,7 @@ public class Product {
     private String id;
     private String name;
     @Builder.Default
-    private String image = "product.png";
+    private String image = "";
     private double unitPrice;
     private double discount;
     private boolean available;

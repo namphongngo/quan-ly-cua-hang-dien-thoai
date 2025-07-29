@@ -18,11 +18,12 @@ import poly.phone.entity.Bill;
 import poly.phone.entity.BillDetail;
 import poly.phone.util.XDate;
 import poly.phone.util.XDialog;
+
 /**
  *
  * @author Nam Phong
  */
-public class BillJDialog extends javax.swing.JDialog implements BillController{
+    public class BillJDialog extends javax.swing.JDialog implements BillController{
     private List<BillDetail> billDetails = new ArrayList<>();
     private BillDAO billDao = new BillDAOImpl(); // nếu bạn có class BillDAOImpl
     private BillDetailDAO billDetailDao = new BillDetailDAOImpl();
@@ -41,7 +42,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
     @Override
     public void open() {
         this.setLocationRelativeTo(null); // căn giữa màn hình
-        this.showProductsJDialog();            // hiển thị dialog
+        this.showProductJDialog();            // hiển thị dialog
     }
 
     @Override
@@ -64,7 +65,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         billDetails.forEach(d -> {
             Object[] row = {false,
                 d.getId(),
-                d.getProductId(),
+                d.getProductName(),
                 String.format("$%.2f", d.getUnitPrice()),
                 String.format("%.0f%%", d.getDiscount() * 100),
                 d.getQuantity(),
@@ -74,8 +75,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         });
     }
 
-    @Override
-    public void removeProducts() { // xóa sản phẩm được tích chọn
+    
+    public void removeProducts() { // xóa đồ uống được tích chọn
         for (int i = 0; i < tblBillDetails.getRowCount(); i++) {
             Boolean checked = (Boolean) tblBillDetails.getValueAt(i, 0);
             if(checked)
@@ -84,8 +85,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         this.fillBillDetails();
     }
 
-    @Override
-    public void showProductsJDialog() { // hiển thị cửa sổ chọn và bổ sung đồ uống
+    
+    public void showProductJDialog() { // hiển thị cửa sổ chọn và bổ sung đồ uống
         ProductJDialog dialog = new ProductJDialog((Frame) this.getOwner(), true);
         dialog.setBill(bill); // Khai báo vào DrinkJDialog @Setter Bill bill
         dialog.setVisible(true);
@@ -176,7 +177,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         btnCheckout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Phiếu Bán Hàng");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -206,7 +206,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "Mã phiếu", "Sản Phẩm", "Đơn giá", "Giảm giá", "Số lượng", "Thành tiền"
+                "", "Mã phiếu", "Điện thoại", "Đơn giá", "Giảm giá", "Số lượng", "Thành tiền"
             }
         ) {
             Class[] types = new Class [] {
@@ -224,14 +224,14 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         });
         jScrollPane1.setViewportView(tblBillDetails);
 
-        btnRemove.setText("Xóa Sản Phẩm");
+        btnRemove.setText("Xóa");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveActionPerformed(evt);
             }
         });
 
-        btnAdd.setText("Thêm Sản Phẩm");
+        btnAdd.setText("Thêm điện thoại");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -330,7 +330,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        this.showProductsJDialog();
+        this.showProductJDialog();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -389,7 +389,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
             java.util.logging.Logger.getLogger(BillJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -425,4 +424,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
     private javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-}
+
+
+    }

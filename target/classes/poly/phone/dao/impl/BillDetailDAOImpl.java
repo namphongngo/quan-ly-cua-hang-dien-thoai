@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.phone.dao.impl;
 
 import java.util.List;
@@ -9,11 +5,12 @@ import poly.phone.dao.BillDetailDAO;
 import poly.phone.entity.BillDetail;
 import poly.phone.util.XJdbc;
 import poly.phone.util.XQuery;
-/**
- *
- * @author Nam Phong
- */
-public class BillDetailDAOImpl implements BillDetailDAO {   
+
+public class BillDetailDAOImpl implements BillDetailDAO {
+
+    public BillDetailDAOImpl() {
+    }
+
     private static final String CREATE_SQL =
         "INSERT INTO BillDetails(Id, BillId, DrinkId, UnitPrice, Discount, Quantity) VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -83,7 +80,8 @@ public class BillDetailDAOImpl implements BillDetailDAO {
     }
 
     @Override
-    public List<BillDetail> findByDrinkId(String drinkId) {
-        return XQuery.getBeanList(BillDetail.class, FIND_BY_DRINK_ID_SQL, drinkId);
+    public List<BillDetail> findByProductId(String productId) {
+        return XQuery.getBeanList(BillDetail.class, FIND_BY_DRINK_ID_SQL, productId);
     }
 }
+

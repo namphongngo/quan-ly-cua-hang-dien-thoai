@@ -4,6 +4,8 @@
  */
 package poly.phone.ui;
 
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import poly.phone.util.XAuth;
 import poly.phone.util.XIcon;
@@ -25,19 +27,27 @@ public class PolyPhoneJFrame extends javax.swing.JFrame implements PolyPhoneCont
     
     @Override
     public void init() {
-        this.setIconImage(XIcon.getIcon("trump-small.png").getImage());
-        this.setLocationRelativeTo(null);
-        
-        this.showWelcomeJDialog(this);
-        this.showLoginJDialog(this);
-        
-        XIcon.setIcon(lblPhoto, "photos/" + XAuth.user.getPhoto());
-        lblFullname.setText(XAuth.user.getFullname());
-
-        if(!XAuth.user.isManager()){
-            pnlCenter.remove(pnlManager);
-        }
+    ImageIcon logo = XIcon.getImage("logo.jpg");
+    if (logo.getImage() != null) {
+        this.setIconImage(logo.getImage());
+    } else {
+        System.err.println("❌ Không tìm thấy logo.jpg trong resources.");
     }
+
+    this.setLocationRelativeTo(null);
+
+    this.showWelcomeJDialog(this);
+    this.showLoginJDialog(this);
+
+    // Ảnh người dùng từ file ngoài (copy vào thư mục ảnh)
+    XIcon.setIcon(lblPhoto, "photos/" + XAuth.user.getPhoto());
+    lblFullname.setText(XAuth.user.getFullname());
+
+    if (!XAuth.user.isManager()) {
+        pnlCenter.remove(pnlManager);
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

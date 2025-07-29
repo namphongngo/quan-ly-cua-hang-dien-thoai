@@ -4,11 +4,13 @@
  */
 package poly.phone.ui;
 
+import javax.swing.ImageIcon;
 import poly.phone.dao.UserDAO;
 import poly.phone.dao.impl.UserDAOImpl;
 import poly.phone.entity.User;
 import poly.phone.util.XAuth;
 import poly.phone.util.XDialog;
+import poly.phone.util.XIcon;
 /**
  *
  * @author Nam Phong
@@ -21,6 +23,9 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
     public LoginJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ImageIcon icon = XIcon.getImage("user.jpg"); // ảnh trong resources/poly/phone/image
+        ImageIcon scaled = XIcon.getScaledIcon(icon, lblAvatar.getWidth(), lblAvatar.getHeight());
+        lblAvatar.setIcon(scaled);
     }
 
     @Override
@@ -56,11 +61,11 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
+        lblAvatar = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         btnExit = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        txtUsername = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Đăng Nhập");
@@ -71,10 +76,6 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         jLabel2.setText("Tên Đăng Nhập");
 
         jLabel3.setText("Mật Khẩu");
-
-        jLabel4.setText("jLabel4");
-
-        txtUsername.setText("user1@gmail.com");
 
         txtPassword.setText("123");
 
@@ -92,13 +93,15 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
             }
         });
 
+        txtUsername.setText("admin@gmail.com");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -106,9 +109,9 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addComponent(txtPassword))))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtUsername))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -131,7 +134,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                    .addComponent(lblAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
@@ -201,7 +204,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblAvatar;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

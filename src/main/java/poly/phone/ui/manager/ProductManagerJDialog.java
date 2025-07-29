@@ -4,9 +4,11 @@
  */
 package poly.phone.ui.manager;
 
+import java.awt.Image;
 import java.io.File;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import poly.phone.dao.CategoryDAO;
@@ -215,15 +217,23 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         tblCategories.setRowSelectionInterval(0, 0);
     }
 
-    @Override
-    public void chooseFile() {
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            File file = XIcon.copyTo(selectedFile, "images");
-            lblPhoto.setToolTipText(file.getName());
-            XIcon.setIcon(lblPhoto, file);
-        }
+@Override
+public void chooseFile() {
+    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+
+        // Sao chép file vào thư mục "images"
+        File file = XIcon.copyTo(selectedFile, "images");
+
+        // Hiển thị tên file trong tooltip
+        lblPhoto.setToolTipText(file.getName());
+
+        // Hiển thị ảnh lên label (scale cho vừa)
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        Image scaled = icon.getImage().getScaledInstance(lblPhoto.getWidth(), lblPhoto.getHeight(), Image.SCALE_SMOOTH);
+        lblPhoto.setIcon(new ImageIcon(scaled));
     }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

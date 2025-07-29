@@ -3,71 +3,75 @@ package poly.phone.util;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class XIcon {
-    /**
-     * Đọc icon từ resource hoặc file
-     * @param path đường dẫn file, đường dẫn resource hoặc tên resource
-     * @return ImageIcon
-     */
-    public static ImageIcon getIcon(String path) {
-        if(!path.contains("/") && !path.contains("\\")){ // resource name
-            return XIcon.getIcon("/poly/phone/icons/" + path);
+
+    // Lấy icon từ thư mục java (cho các icon nút như accept.png)
+    public static ImageIcon getIcon(String name) {
+        URL url = XIcon.class.getResource("/poly/phone/icons/" + name);
+        if (url != null) {
+            return new ImageIcon(url);
         }
-        if(path.startsWith("/")){ // resource path
-            return new ImageIcon(XIcon.class.getResource(path));
+        System.err.println("❌ Không tìm thấy icon: " + name);
+        return new ImageIcon(); // tránh null pointer
+    }
+
+    // Lấy hình ảnh từ resources (logo, avatar mặc định...)
+    public static ImageIcon getImage(String name) {
+        URL url = XIcon.class.getResource("/poly/phone/image/" + name);
+        if (url != null) {
+            return new ImageIcon(url);
         }
-        return new ImageIcon(path);
+        System.err.println("❌ Không tìm thấy ảnh trong resources: " + name);
+        return new ImageIcon(); // tránh null pointer
     }
-    /**
-     * Đọc icon theo kích thước
-     * @param path đường dẫn file hoặc tài nguyên
-     * @param width chiều rộng
-     * @param height chiều cao
-     * @return Icon
-     */
-    public static ImageIcon getIcon(String path, int width, int height) {
-        Image image = getIcon(path).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(image);
-    }
-    /**
-     * Thay đổi icon của JLabel
-     * @param label JLabel cần thay đổi
-     * @param path đường dẫn file hoặc tài nguyên
-     */
+
+    // Set icon vào JLabel từ đường dẫn file ngoài
     public static void setIcon(JLabel label, String path) {
-        label.setIcon(XIcon.getIcon(path, label.getWidth(), label.getHeight()));
-    }
-    /**
-     * Thay đổi icon của JLabel
-     * @param label JLabel cần thay đổi
-     * @param file file icon
-     */
-    public static void setIcon(JLabel label, File file) {
-        XIcon.setIcon(label, file.getAbsolutePath());
-    }
-    /**
-     * Sao chép file vào thư mục với tên file mới là duy nhất
-     * @param fromFile file cần sao chép
-     * @param folder thư mục đích
-     * @return File đã sao chép
-     */
-    public static File copyTo(File fromFile, String folder) {
-        String fileExt = fromFile.getName().substring(fromFile.getName().lastIndexOf("."));
-        File toFile = new File(folder, XStr.getKey() + fileExt);
-        toFile.getParentFile().mkdirs();
-        try {
-            Files.copy(fromFile.toPath(), toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            return toFile;
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        ImageIcon icon = new ImageIcon(path);
+        if (icon.getImage() != null) {
+            icon = getScaledIcon(icon, label.getWidth(), label.getHeight());
+            label.setIcon(icon);
+        } else {
+            System.err.println("❌ Không thể load ảnh: " + path);
         }
     }
-    public static File copyTo(File fromFile) {
-        return copyTo(fromFile, "files");
+
+    // Set icon vào JLabel từ File
+    public static void setIcon(JLabel label, File file) {
+        setIcon(label, file.getAbsolutePath());
+    }
+
+    // Resize ảnh cho vừa khung JLabel
+    public static ImageIcon getScaledIcon(ImageIcon icon, int width, int height) {
+        Image img = icon.getImage();
+        if (img == null) return icon;
+        Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImg);
+    }
+
+    // Sao chép file ảnh được chọn về thư mục lưu ảnh (ví dụ: "photos")
+    public static File copyTo(File file, String dir) {
+        File folder = new File(dir);
+        if (!folder.exists()) folder.mkdirs();
+
+        File newFile = new File(folder, file.getName());
+        try {
+            Path source = file.toPath();
+            Path target = newFile.toPath();
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newFile;
     }
 }
+
+
+

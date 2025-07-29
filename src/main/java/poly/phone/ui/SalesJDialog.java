@@ -26,7 +26,7 @@ public class SalesJDialog extends javax.swing.JDialog implements SalesController
     @Setter
     Bill bill;
     /**
-     * Creates new form SalesJDialog
+     * Creates new form NewJDialog
      */
     public SalesJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -141,6 +141,7 @@ public class SalesJDialog extends javax.swing.JDialog implements SalesController
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SalesJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */

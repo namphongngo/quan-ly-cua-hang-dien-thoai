@@ -13,3 +13,4 @@ import poly.phone.entity.Product;
 public interface ProductDAO extends CrudDAO<Product, String>{
         List<Product> findByCategoryId(String categoryId);
 }
+

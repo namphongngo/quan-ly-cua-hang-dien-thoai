@@ -4,10 +4,11 @@
  */
 package poly.phone.ui.manager;
 
+import poly.phone.entity.Category;
 /**
  *
  * @author Nam Phong
  */
-public interface CategoryController {
+public interface CategoryController extends CrudController<Category>{
     
 }

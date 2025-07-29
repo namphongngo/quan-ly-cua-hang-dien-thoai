@@ -26,7 +26,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="jLabel4" min="-2" pref="100" max="-2" attributes="0"/>
+              <Component id="lblAvatar" min="-2" pref="100" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -34,9 +34,9 @@
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtUsername" alignment="0" pref="200" max="32767" attributes="0"/>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtPassword" alignment="0" pref="200" max="32767" attributes="0"/>
+                          <Component id="txtUsername" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -66,7 +66,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel4" pref="134" max="32767" attributes="0"/>
+                  <Component id="lblAvatar" min="-2" pref="134" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -97,15 +97,7 @@
         <Property name="text" type="java.lang.String" value="M&#x1ead;t Kh&#x1ea9;u"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel4"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtUsername">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="user1@gmail.com"/>
-      </Properties>
+    <Component class="javax.swing.JLabel" name="lblAvatar">
     </Component>
     <Component class="javax.swing.JTextField" name="txtPassword">
       <Properties>
@@ -127,6 +119,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtUsername">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="admin@gmail.com"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

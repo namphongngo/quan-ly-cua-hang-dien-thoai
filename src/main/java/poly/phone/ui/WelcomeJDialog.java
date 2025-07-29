@@ -54,8 +54,8 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 102, 51));
-        jLabel1.setText("Poly Phone");
+        jLabel1.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel1.setText("PinPin Phone");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,7 +68,7 @@ public class WelcomeJDialog extends javax.swing.JDialog implements WelcomeContro
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(72, 72, 72))
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

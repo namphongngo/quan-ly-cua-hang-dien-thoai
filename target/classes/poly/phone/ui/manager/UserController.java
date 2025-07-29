@@ -4,10 +4,12 @@
  */
 package poly.phone.ui.manager;
 
+import poly.phone.entity.User;
+
 /**
  *
  * @author Nam Phong
  */
-public interface UserController {
+public interface UserController extends CrudController<User> {
     
 }
