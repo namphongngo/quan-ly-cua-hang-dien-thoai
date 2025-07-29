@@ -75,6 +75,7 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
     }
 
     
+    @Override
     public void selectTimeRange() {
         TimeRange range = TimeRange.today();
         switch (cboTimeRanges.getSelectedIndex()) {
@@ -207,6 +208,7 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
             Bill entity = items.get(row);
             this.setForm(entity);
             this.setEditable(true);
+            tabs.setSelectedIndex(1);
             
         }
     }
@@ -245,7 +247,7 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -286,9 +288,14 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
         btnMoveLast = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jTabbedPane1.setToolTipText("");
-        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabs.setToolTipText("");
+        tabs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Từ ngày:");
 
@@ -415,7 +422,7 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
                 .addContainerGap(73, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("DANH SÁCH", jPanel1);
+        tabs.addTab("DANH SÁCH", jPanel1);
 
         jLabel3.setText("Mã điện thoại");
 
@@ -551,10 +558,9 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
                             .addComponent(jScrollPane2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtCheckin, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                                     .addComponent(txtId)
                                     .addComponent(txtUsername))
@@ -620,7 +626,7 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("BIỂU MẪU", jPanel2);
+        tabs.addTab("BIỂU MẪU", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -628,14 +634,14 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -723,6 +729,11 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.open();
+    }//GEN-LAST:event_formWindowOpened
+
      /**
      * @param args the command line arguments
      */
@@ -793,10 +804,10 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton rdoCanceled;
     private javax.swing.JRadioButton rdoCompleted;
     private javax.swing.JRadioButton rdoServicing;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblBillDetails;
     private javax.swing.JTable tblBills;
     private javax.swing.JTextField txtBegin;
