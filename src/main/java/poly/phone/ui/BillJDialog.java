@@ -23,7 +23,7 @@ import poly.phone.util.XDialog;
  *
  * @author Nam Phong
  */
-public class BillJDialog extends javax.swing.JDialog implements BillController{
+    public class BillJDialog extends javax.swing.JDialog implements BillController{
     private List<BillDetail> billDetails = new ArrayList<>();
     private BillDAO billDao = new BillDAOImpl(); // nếu bạn có class BillDAOImpl
     private BillDetailDAO billDetailDao = new BillDetailDAOImpl();
@@ -42,7 +42,7 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
     @Override
     public void open() {
         this.setLocationRelativeTo(null); // căn giữa màn hình
-        this.showDrinkJDialog();            // hiển thị dialog
+        this.showProductJDialog();            // hiển thị dialog
     }
 
     @Override
@@ -75,8 +75,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         });
     }
 
-    @Override
-    public void removeDrinks() { // xóa đồ uống được tích chọn
+    
+    public void removeProducts() { // xóa đồ uống được tích chọn
         for (int i = 0; i < tblBillDetails.getRowCount(); i++) {
             Boolean checked = (Boolean) tblBillDetails.getValueAt(i, 0);
             if(checked)
@@ -85,8 +85,8 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
         this.fillBillDetails();
     }
 
-    @Override
-    public void showDrinkJDialog() { // hiển thị cửa sổ chọn và bổ sung đồ uống
+    
+    public void showProductJDialog() { // hiển thị cửa sổ chọn và bổ sung đồ uống
         ProductJDialog dialog = new ProductJDialog((Frame) this.getOwner(), true);
         dialog.setBill(bill); // Khai báo vào DrinkJDialog @Setter Bill bill
         dialog.setVisible(true);
@@ -330,12 +330,12 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        this.showDrinkJDialog();
+        this.showProductJDialog();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         // TODO add your handling code here:
-        this.removeDrinks();
+        this.removeProducts();
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckoutActionPerformed
@@ -424,4 +424,6 @@ public class BillJDialog extends javax.swing.JDialog implements BillController{
     private javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-}
+
+
+    }
