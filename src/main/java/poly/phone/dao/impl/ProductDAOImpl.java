@@ -14,7 +14,7 @@ import poly.phone.dao.ProductDAO;
  * @author Nam Phong
  */
 public class ProductDAOImpl implements ProductDAO {
-    private static final String CREATE_SQL = "INSERT INTO Products(Id, Name, Image, UnitPrice, Discount, Available, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREATE_SQL = "INSERT INTO Products (Id, Name, UnitPrice, Discount, Image, Available, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_SQL = "UPDATE Products SET Name=?, Image=?, UnitPrice=?, Discount=?, Available=?, CategoryId=? WHERE Id=?";
     private static final String DELETE_SQL = "DELETE FROM Products WHERE Id=?";
     private static final String FIND_ALL_SQL = "SELECT * FROM Products";
@@ -22,20 +22,26 @@ public class ProductDAOImpl implements ProductDAO {
     
     private static final String FIND_BY_CATEGORY_ID_SQL = "SELECT * FROM Products WHERE CategoryId=?";
 
-    @Override
-    public Product create(Product entity) {
+ @Override
+public Product create(Product entity) {
+    try {
         Object[] values = {
             entity.getId(),
             entity.getName(),
-            entity.getImage(),
             entity.getUnitPrice(),
             entity.getDiscount(),
+            entity.getImage(),
             entity.isAvailable(),
             entity.getCategoryId()
         };
         XJdbc.executeUpdate(CREATE_SQL, values);
+        System.out.println("Đã thêm sản phẩm: " + entity.getId());
         return entity;
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Lỗi thêm sản phẩm: " + e.getMessage());
     }
+}
 
     @Override
     public void update(Product entity) {
