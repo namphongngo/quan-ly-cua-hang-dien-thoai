@@ -23,7 +23,7 @@ import poly.phone.util.XDialog;
  *
  * @author Nam Phong
  */
-    public class BillJDialog extends javax.swing.JDialog implements BillController{
+    public final class BillJDialog extends javax.swing.JDialog implements BillController{
     private List<BillDetail> billDetails = new ArrayList<>();
     private BillDAO billDao = new BillDAOImpl(); // nếu bạn có class BillDAOImpl
     private BillDetailDAO billDetailDao = new BillDetailDAOImpl();
@@ -75,7 +75,7 @@ import poly.phone.util.XDialog;
         });
     }
 
-    
+    @Override
     public void removeProducts() { // xóa đồ uống được tích chọn
         for (int i = 0; i < tblBillDetails.getRowCount(); i++) {
             Boolean checked = (Boolean) tblBillDetails.getValueAt(i, 0);
@@ -85,7 +85,7 @@ import poly.phone.util.XDialog;
         this.fillBillDetails();
     }
 
-    
+    @Override
     public void showProductJDialog() { // hiển thị cửa sổ chọn và bổ sung đồ uống
         ProductJDialog dialog = new ProductJDialog((Frame) this.getOwner(), true);
         dialog.setBill(bill); // Khai báo vào DrinkJDialog @Setter Bill bill
@@ -231,7 +231,7 @@ import poly.phone.util.XDialog;
             }
         });
 
-        btnAdd.setText("Thêm điện thoại");
+        btnAdd.setText("Thêm Sản Phẩm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -424,6 +424,4 @@ import poly.phone.util.XDialog;
     private javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
-
-    }
+}
