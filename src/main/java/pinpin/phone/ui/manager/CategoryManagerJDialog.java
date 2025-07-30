@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package pinpin.phone.ui.manager;
+package poly.phone.ui.manager;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import pinpin.phone.dao.CategoryDAO;
-import pinpin.phone.dao.impl.CategoryDAOImpl;
-import pinpin.phone.entity.Category;
-import pinpin.phone.util.XDialog;
+import poly.phone.dao.CategoryDAO;
+import poly.phone.dao.impl.CategoryDAOImpl;
+import poly.phone.entity.Category;
+import poly.phone.util.XDialog;
 /**
  *
  * @author Nam Phong
@@ -48,6 +48,12 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
     }
 
     @Override
+    
+    
+    
+    
+    
+    
     public void edit() {
         Category entity = items.get(tblDienThoai.getSelectedRow());
         this.setForm(entity);
@@ -162,9 +168,9 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDienThoai = new javax.swing.JTable();
-        btnSelectAll = new javax.swing.JButton();
-        btnUnselectAll = new javax.swing.JButton();
-        btnDeleteSelected = new javax.swing.JButton();
+        btnCheckAll = new javax.swing.JButton();
+        btnUncheckAll = new javax.swing.JButton();
+        btnDeleteCheckedItems = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtMaDienThoai = new javax.swing.JTextField();
         txtTenDienThoai = new javax.swing.JTextField();
@@ -173,7 +179,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         btnCreate = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnResetForm = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         btnMoveFirst = new javax.swing.JButton();
         btnMovePrevious = new javax.swing.JButton();
         btnMoveNext = new javax.swing.JButton();
@@ -181,6 +187,11 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản Lý Loại Sản Phẩm");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         tblDienThoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,11 +214,26 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         });
         jScrollPane1.setViewportView(tblDienThoai);
 
-        btnSelectAll.setText("Chọn tất cả");
+        btnCheckAll.setText("Chọn tất cả");
+        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckAllActionPerformed(evt);
+            }
+        });
 
-        btnUnselectAll.setText("Bỏ chọn tất cả");
+        btnUncheckAll.setText("Bỏ chọn tất cả");
+        btnUncheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUncheckAllActionPerformed(evt);
+            }
+        });
 
-        btnDeleteSelected.setText("Xoá các mục chọn");
+        btnDeleteCheckedItems.setText("Xoá các mục chọn");
+        btnDeleteCheckedItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteCheckedItemsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -217,11 +243,11 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(311, 311, 311)
-                        .addComponent(btnSelectAll)
+                        .addComponent(btnCheckAll)
                         .addGap(18, 18, 18)
-                        .addComponent(btnUnselectAll)
+                        .addComponent(btnUncheckAll)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDeleteSelected))
+                        .addComponent(btnDeleteCheckedItems))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -234,9 +260,9 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelectAll)
-                    .addComponent(btnUnselectAll)
-                    .addComponent(btnDeleteSelected))
+                    .addComponent(btnCheckAll)
+                    .addComponent(btnUncheckAll)
+                    .addComponent(btnDeleteCheckedItems))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -247,12 +273,32 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         jLabel2.setText("Tên điện thoại");
 
         btnCreate.setText("Tạo mới");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Cập nhật");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Xoá");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
-        btnResetForm.setText("Nhập mới");
+        btnClear.setText("Nhập mới");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnMoveFirst.setText("|<");
         btnMoveFirst.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +350,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete)
                         .addGap(18, 18, 18)
-                        .addComponent(btnResetForm)
+                        .addComponent(btnClear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                         .addComponent(btnMoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -337,7 +383,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
                         .addComponent(btnCreate)
                         .addComponent(btnUpdate)
                         .addComponent(btnDelete)
-                        .addComponent(btnResetForm, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(62, 62, 62))
         );
 
@@ -354,7 +400,7 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -381,6 +427,46 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
         // TODO add your handling code here:
         this.moveLast();
     }//GEN-LAST:event_btnMoveLastActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.open();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
+        // TODO add your handling code here:
+        this.checkAll();
+    }//GEN-LAST:event_btnCheckAllActionPerformed
+
+    private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed
+        // TODO add your handling code here:
+        this.uncheckAll();
+    }//GEN-LAST:event_btnUncheckAllActionPerformed
+
+    private void btnDeleteCheckedItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCheckedItemsActionPerformed
+        // TODO add your handling code here:
+        this.deleteCheckedItems();
+    }//GEN-LAST:event_btnDeleteCheckedItemsActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        this.create();
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -425,16 +511,16 @@ public class CategoryManagerJDialog extends javax.swing.JDialog implements Categ
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCheckAll;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDeleteSelected;
+    private javax.swing.JButton btnDeleteCheckedItems;
     private javax.swing.JButton btnMoveFirst;
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
-    private javax.swing.JButton btnResetForm;
-    private javax.swing.JButton btnSelectAll;
-    private javax.swing.JButton btnUnselectAll;
+    private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
