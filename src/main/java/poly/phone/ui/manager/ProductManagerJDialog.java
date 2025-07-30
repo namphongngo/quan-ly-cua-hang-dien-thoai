@@ -4,11 +4,9 @@
  */
 package poly.phone.ui.manager;
 
-import java.awt.Image;
 import java.io.File;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import poly.phone.dao.CategoryDAO;
@@ -217,23 +215,15 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         tblCategories.setRowSelectionInterval(0, 0);
     }
 
-@Override
-public void chooseFile() {
-    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        File selectedFile = fileChooser.getSelectedFile();
-
-        // Sao chép file vào thư mục "images"
-        File file = XIcon.copyTo(selectedFile, "images");
-
-        // Hiển thị tên file trong tooltip
-        lblPhoto.setToolTipText(file.getName());
-
-        // Hiển thị ảnh lên label (scale cho vừa)
-        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-        Image scaled = icon.getImage().getScaledInstance(lblPhoto.getWidth(), lblPhoto.getHeight(), Image.SCALE_SMOOTH);
-        lblPhoto.setIcon(new ImageIcon(scaled));
+    @Override
+    public void chooseFile() {
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            File file = XIcon.copyTo(selectedFile, "images");
+            lblPhoto.setToolTipText(file.getName());
+            XIcon.setIcon(lblPhoto, file);
+        }
     }
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -379,13 +369,15 @@ public void chooseFile() {
 
         tabs.addTab("DANH SÁCH", jPanel1);
 
+        lblPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/phone/ui/manager/trump-small.png"))); // NOI18N
+
         rdoUnavailable.setText("Hết hàng");
 
         jLabel3.setText("Đơn giá");
 
         jLabel4.setText("Loại");
 
-        jLabel5.setText("Tên đồ uống");
+        jLabel5.setText("Tên sản phẩm");
 
         jLabel6.setText("Giảm giá");
 
@@ -393,7 +385,7 @@ public void chooseFile() {
 
         rdoAvailable.setText("Sẵn có");
 
-        jLabel2.setText("Mã đồ uống");
+        jLabel2.setText("Mã sản phẩm ");
 
         btnCreate.setText("Tạo mới");
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -506,12 +498,12 @@ public void chooseFile() {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -531,18 +523,20 @@ public void chooseFile() {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cboCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rdoAvailable)
-                            .addComponent(rdoUnavailable)))
-                    .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnClear)
-                    .addComponent(btnMoveLast)
-                    .addComponent(btnMoveNext)
-                    .addComponent(btnMovePrevious)
-                    .addComponent(btnMoveFirst))
+                            .addComponent(rdoUnavailable))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCreate)
+                            .addComponent(btnUpdate)
+                            .addComponent(btnDelete)
+                            .addComponent(btnClear)
+                            .addComponent(btnMoveLast)
+                            .addComponent(btnMoveNext)
+                            .addComponent(btnMovePrevious)
+                            .addComponent(btnMoveFirst)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
