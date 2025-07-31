@@ -3,7 +3,6 @@ pinpin\phone\ui\manager\BillManagerJDialog$7.class
 pinpin\phone\ui\manager\UserManagerJDialog$15.class
 pinpin\phone\ui\WelcomeJDialog.class
 pinpin\phone\ui\manager\RevenueManagerJDialog$4.class
-pinpin\phone\ui\manager\NewJDialog$13.class
 pinpin\phone\ui\manager\ProductManagerJDialog$5.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$6.class
 pinpin\phone\ui\PinPinPhoneJFrame$5.class
@@ -13,7 +12,6 @@ pinpin\phone\entity\Category.class
 pinpin\phone\util\XStr.class
 pinpin\phone\ui\HistoryJDialog$1.class
 pinpin\phone\ui\manager\BillManagerJDialog$19.class
-pinpin\phone\ui\manager\NewJDialog$4.class
 pinpin\phone\util\XJdbc.class
 pinpin\phone\ui\ChangePasswordJDialog$3.class
 pinpin\phone\ui\component\ImageJPanel$1.class
@@ -52,7 +50,6 @@ pinpin\phone\ui\BillJDialog$4.class
 pinpin\phone\ui\ChangePasswordJDialog$2.class
 pinpin\phone\ui\manager\BillManagerJDialog$18.class
 pinpin\phone\ui\HistoryJDialog$2.class
-pinpin\phone\ui\manager\NewJDialog$8.class
 pinpin\phone\ui\LoginJDialog$3$1.class
 pinpin\phone\ui\manager\UserManagerJDialog$4.class
 pinpin\phone\ui\HistoryJDialog$5.class
@@ -72,6 +69,7 @@ pinpin\phone\ui\manager\CategoryManagerJDialog$15.class
 pinpin\phone\ui\manager\ProductManagerJDialog$4.class
 pinpin\phone\ui\manager\UserManagerJDialog$7.class
 pinpin\phone\ui\BillJDialog$7.class
+pinpin\phone\ui\manager\CardManagerJDialog$15.class
 pinpin\phone\entity\Revenue$ByCategory.class
 pinpin\phone\ui\manager\BillManagerJDialog$20$1.class
 pinpin\phone\ui\manager\RevenueManagerJDialog$2.class
@@ -96,9 +94,9 @@ pinpin\phone\entity\Bill.class
 pinpin\phone\ui\manager\UserManagerJDialog$6.class
 pinpin\phone\ui\BillJDialog$6.class
 pinpin\phone\ui\ChangePasswordJDialog$1.class
+pinpin\phone\ui\manager\CardManagerJDialog$15$1.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$13.class
 pinpin\phone\ui\BillJDialog$5.class
-pinpin\phone\ui\manager\NewJDialog$9.class
 pinpin\phone\ui\manager\BillManagerJDialog$17.class
 pinpin\phone\ui\ProductJDialog$1.class
 pinpin\phone\ui\manager\CardManagerJDialog$4.class
@@ -113,8 +111,6 @@ pinpin\phone\ui\manager\CategoryManagerJDialog$9.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$14.class
 pinpin\phone\ui\manager\BillManagerJDialog$4.class
 pinpin\phone\ui\manager\ProductManagerJDialog$8.class
-pinpin\phone\ui\manager\NewJDialog$1.class
-pinpin\phone\ui\manager\NewJDialog.class
 pinpin\phone\ui\WelcomeJDialog$2$1.class
 pinpin\phone\ui\ChangePasswordController.class
 pinpin\phone\ui\manager\RevenueManagerJDialog$1.class
@@ -122,7 +118,6 @@ pinpin\phone\ui\manager\UserManagerJDialog.class
 pinpin\phone\ui\manager\CardManagerJDialog$13.class
 pinpin\phone\ui\manager\UserManagerJDialog$15$1.class
 pinpin\phone\ui\PinPinPhoneJFrame$8.class
-pinpin\phone\ui\manager\NewJDialog$10.class
 pinpin\phone\ui\manager\BillManagerJDialog$11.class
 pinpin\phone\ui\WelcomeJDialog$2.class
 pinpin\phone\ui\manager\BillManagerJDialog.class
@@ -131,14 +126,12 @@ pinpin\phone\ui\ProductJDialog$3.class
 pinpin\phone\ui\BillJDialog$3.class
 pinpin\phone\ui\manager\ProductManagerJDialog$14.class
 pinpin\phone\ui\HistoryJDialog$4.class
-pinpin\phone\ui\manager\NewJDialog$7.class
 pinpin\phone\dao\BillDetailDAO.class
 pinpin\phone\ui\HistoryJDialog$6$1.class
 pinpin\phone\ui\PinPinPhoneJFrame$10.class
 pinpin\phone\ui\BillJDialog.class
 pinpin\phone\ui\manager\UserManagerJDialog$12.class
 pinpin\phone\util\XQuery.class
-pinpin\phone\ui\manager\NewJDialog$15.class
 pinpin\phone\ui\manager\UserManagerJDialog$13.class
 pinpin\phone\ui\manager\BillController.class
 pinpin\phone\entity\BillDetail$BillDetailBuilder.class
@@ -152,7 +145,6 @@ pinpin\phone\ui\SalesJDialog$1.class
 pinpin\phone\entity\Bill$BillBuilder.class
 pinpin\phone\ui\manager\ProductManagerJDialog$2.class
 pinpin\phone\ui\manager\UserManagerJDialog$9.class
-pinpin\phone\ui\manager\NewJDialog$6.class
 pinpin\phone\entity\Card$CardBuilder.class
 pinpin\phone\ui\manager\UserManagerJDialog$2.class
 pinpin\phone\ui\PinPinPhoneJFrame$9.class
@@ -172,7 +164,6 @@ pinpin\phone\ui\BillJDialog$2.class
 pinpin\phone\ui\manager\CardManagerJDialog.class
 pinpin\phone\ui\ProductJDialog$4.class
 pinpin\phone\ui\manager\ProductManagerJDialog$1.class
-pinpin\phone\ui\manager\NewJDialog$5.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$2.class
 pinpin\phone\dao\impl\BillDetailDAOImpl.class
 pinpin\phone\ui\manager\RevenueController.class
@@ -183,11 +174,9 @@ pinpin\phone\ui\manager\CategoryManagerJDialog$10.class
 pinpin\phone\ui\component\RadioJPanel.class
 pinpin\phone\ui\manager\UserManagerJDialog$11.class
 pinpin\phone\dao\CrudDAO.class
-pinpin\phone\ui\manager\NewJDialog$15$1.class
 pinpin\phone\ui\manager\UserManagerJDialog$1.class
 pinpin\phone\ui\manager\CrudController.class
 pinpin\phone\ui\SalesController.class
-pinpin\phone\ui\manager\CardManagerJDialog$14$1.class
 pinpin\phone\ui\manager\BillManagerJDialog$12.class
 pinpin\phone\ui\SalesJDialog$2.class
 pinpin\phone\ui\manager\BillManagerJDialog$3.class
@@ -195,20 +184,16 @@ pinpin\phone\ui\BillController.class
 pinpin\phone\dao\BillDAO.class
 pinpin\phone\ui\PinPinPhoneJFrame$7.class
 pinpin\phone\ui\SalesJDialog.class
-pinpin\phone\ui\manager\NewJDialog$11.class
 pinpin\phone\entity\User.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$5.class
 pinpin\phone\ui\manager\BillManagerJDialog$6.class
-pinpin\phone\ui\manager\NewJDialog$14.class
 pinpin\phone\ui\PinPinPhoneJFrame.class
 pinpin\phone\ui\PinPinPhoneJFrame$4.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$4.class
 pinpin\phone\entity\BillDetail.class
 pinpin\phone\ui\PinPinPhoneJFrame$11.class
 pinpin\phone\ui\ProductJDialog$4$1.class
-pinpin\phone\ui\manager\NewJDialog$3.class
 pinpin\phone\ui\manager\UserManagerJDialog$10.class
-pinpin\phone\ui\manager\NewJDialog$12.class
 pinpin\phone\ui\manager\CardManagerJDialog$9.class
 pinpin\phone\ui\manager\BillManagerJDialog$5.class
 pinpin\phone\entity\User$UserBuilder.class
@@ -225,4 +210,3 @@ pinpin\phone\ui\manager\CategoryManagerJDialog$3.class
 pinpin\phone\ui\manager\BillManagerJDialog$10.class
 pinpin\phone\ui\PinPinPhoneJFrame$6.class
 pinpin\phone\util\XDialog.class
-pinpin\phone\ui\manager\NewJDialog$2.class
