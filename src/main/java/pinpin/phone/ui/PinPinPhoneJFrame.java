@@ -11,7 +11,7 @@ import pinpin.phone.util.XIcon;
  *
  * @author Nam Phong
  */
-public class PinPinPhoneJFrame extends javax.swing.JFrame implements PinPinPhoneController{
+public final class PinPinPhoneJFrame extends javax.swing.JFrame implements PinPinPhoneController{
     private JPanel pnlManager;
     private JPanel pnlCenter;
     /**
@@ -24,7 +24,7 @@ public class PinPinPhoneJFrame extends javax.swing.JFrame implements PinPinPhone
     
     @Override
     public void init() {
-        this.setIconImage(XIcon.getImage("logo.jpg").getImage());
+        this.setIconImage(XIcon.getIcon("/pinpin/phone/image/logo.jpg").getImage());
         this.setLocationRelativeTo(null);
 
         this.showWelcomeJDialog(this);
@@ -164,21 +164,20 @@ public class PinPinPhoneJFrame extends javax.swing.JFrame implements PinPinPhone
                             .addComponent(btnCardManager, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                             .addComponent(btnRevenueManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(123, 123, 123)
-                                .addComponent(lblFullname))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(99, 99, 99)
-                                .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(123, 123, 123)
+                        .addComponent(lblFullname)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
-                .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFullname)
                 .addGap(18, 18, 18)

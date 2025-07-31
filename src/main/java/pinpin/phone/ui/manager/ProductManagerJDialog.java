@@ -45,7 +45,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
 
     @Override
     public void fillToTable() {
-        DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblProduct.getModel();
         model.setRowCount(0);
 
         Category category = categories.get(tblCategories.getSelectedRow());
@@ -67,7 +67,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
 
     @Override
     public void edit() {
-        Product entity = items.get(tblDrinks.getSelectedRow());
+        Product entity = items.get(tblProduct.getSelectedRow());
         this.setForm(entity);
         this.setEditable(true);
         tabs.setSelectedIndex(1);
@@ -76,16 +76,16 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
     @Override public void checkAll() { this.setCheckedAll(true); }
     @Override public void uncheckAll() { this.setCheckedAll(false); }
     private void setCheckedAll(boolean checked) {
-        for (int i = 0; i < tblDrinks.getRowCount(); i++) {
-            tblDrinks.setValueAt(checked, i, 5); // cột trạng thái checkbox
+        for (int i = 0; i < tblProduct.getRowCount(); i++) {
+            tblProduct.setValueAt(checked, i, 5); // cột trạng thái checkbox
         }
     }
 
     @Override
     public void deleteCheckedItems() {
         if (XDialog.confirm("Bạn thực sự muốn xóa các mục chọn?")) {
-            for (int i = 0; i < tblDrinks.getRowCount(); i++) {
-                if ((Boolean) tblDrinks.getValueAt(i, 5)) {
+            for (int i = 0; i < tblProduct.getRowCount(); i++) {
+                if ((Boolean) tblProduct.getValueAt(i, 5)) {
                     dao.deleteById(items.get(i).getId());
                 }
             }
@@ -94,18 +94,18 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
     }
 
     @Override
-    public void setForm(Product drink) {
-        txtId.setText(drink.getId());
-        txtName.setText(drink.getName());
-        txtPrice.setText(String.valueOf(drink.getUnitPrice()));
-        txtDiscount.setValue((int) drink.getDiscount());
-        rdoAvailable.setSelected(drink.isAvailable());
-        rdoUnavailable.setSelected(!drink.isAvailable());
-        lblPhoto.setToolTipText(drink.getImage());
-        XIcon.setIcon(lblPhoto, "images/" + drink.getImage());
+    public void setForm(Product product) {
+        txtId.setText(product.getId());
+        txtName.setText(product.getName());
+        txtPrice.setText(String.valueOf(product.getUnitPrice()));
+        txtDiscount.setValue((int) product.getDiscount());
+        rdoAvailable.setSelected(product.isAvailable());
+        rdoUnavailable.setSelected(!product.isAvailable());
+        lblPhoto.setToolTipText(product.getImage());
+        XIcon.setIcon(lblPhoto, "images/" + product.getImage());
         cboCategories.setSelectedItem(
             categories.stream()
-                .filter(c -> c.getId().equals(drink.getCategoryId()))
+                .filter(c -> c.getId().equals(product.getCategoryId()))
                 .findFirst().orElse(null)
         );
     }
@@ -113,19 +113,19 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
 
     @Override
     public Product getForm() {
-        Product drink = new Product();
-        drink.setId(txtId.getText());
-        drink.setName(txtName.getText());
-        drink.setUnitPrice(Double.parseDouble(txtPrice.getText()));
-        drink.setDiscount(txtDiscount.getValue());
-        drink.setAvailable(rdoAvailable.isSelected());
+        Product product = new Product();
+        product.setId(txtId.getText());
+        product.setName(txtName.getText());
+        product.setUnitPrice(Double.parseDouble(txtPrice.getText()));
+        product.setDiscount(txtDiscount.getValue());
+        product.setAvailable(rdoAvailable.isSelected());
         Category selectedCategory = (Category) cboCategories.getSelectedItem();
         if (selectedCategory != null) {
-            drink.setCategoryId(selectedCategory.getId());
+            product.setCategoryId(selectedCategory.getId());
         }
         String imageName = lblPhoto.getToolTipText();
-        drink.setImage(imageName != null ? imageName : "");
-        return drink;
+        product.setImage(imageName != null ? imageName : "");
+        return product;
     }
 
 
@@ -177,19 +177,19 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
     }
 
     @Override public void moveFirst() { this.moveTo(0); }
-    @Override public void movePrevious() { this.moveTo(tblDrinks.getSelectedRow() - 1); }
-    @Override public void moveNext() { this.moveTo(tblDrinks.getSelectedRow() + 1); }
-    @Override public void moveLast() { this.moveTo(tblDrinks.getRowCount() - 1); }
+    @Override public void movePrevious() { this.moveTo(tblProduct.getSelectedRow() - 1); }
+    @Override public void moveNext() { this.moveTo(tblProduct.getSelectedRow() + 1); }
+    @Override public void moveLast() { this.moveTo(tblProduct.getRowCount() - 1); }
 
     @Override
     public void moveTo(int index) {
         if (index < 0) {
             this.moveLast();
-        } else if (index >= tblDrinks.getRowCount()) {
+        } else if (index >= tblProduct.getRowCount()) {
             this.moveFirst();
         } else {
-            tblDrinks.clearSelection();
-            tblDrinks.setRowSelectionInterval(index, index);
+            tblProduct.clearSelection();
+            tblProduct.setRowSelectionInterval(index, index);
             this.edit();
         }
     }
@@ -238,12 +238,11 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         jScrollPane4 = new javax.swing.JScrollPane();
         tblCategories = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDrinks = new javax.swing.JTable();
+        tblProduct = new javax.swing.JTable();
         btnDeleteCheckedItems = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnCheckAll = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        lblPhoto = new javax.swing.JLabel();
         rdoUnavailable = new javax.swing.JRadioButton();
         txtId = new javax.swing.JTextField();
         txtDiscount = new javax.swing.JSlider();
@@ -265,6 +264,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         btnMoveNext = new javax.swing.JButton();
         btnMovePrevious = new javax.swing.JButton();
         btnMoveFirst = new javax.swing.JButton();
+        lblPhoto = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản Lý Sản Phẩm");
@@ -284,9 +284,14 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                 "Loại Sản Phẩm"
             }
         ));
+        tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoriesMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblCategories);
 
-        tblDrinks.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -305,12 +310,12 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                 return types [columnIndex];
             }
         });
-        tblDrinks.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDrinksMouseClicked(evt);
+                tblProductMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblDrinks);
+        jScrollPane1.setViewportView(tblProduct);
 
         btnDeleteCheckedItems.setText("Xóa các mục chọn");
         btnDeleteCheckedItems.addActionListener(new java.awt.event.ActionListener() {
@@ -368,8 +373,6 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         );
 
         tabs.addTab("DANH SÁCH", jPanel1);
-
-        lblPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pinpin/phone/ui/manager/trump-small.png"))); // NOI18N
 
         rdoUnavailable.setText("Hết hàng");
 
@@ -443,18 +446,22 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
             }
         });
 
+        lblPhoto.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(btnCreate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate))
-                    .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -470,7 +477,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMoveLast, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 87, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtId)
@@ -502,41 +509,41 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
                     .addComponent(jLabel2)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rdoAvailable)
-                            .addComponent(rdoUnavailable))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCreate)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnDelete)
-                            .addComponent(btnClear)
-                            .addComponent(btnMoveLast)
-                            .addComponent(btnMoveNext)
-                            .addComponent(btnMovePrevious)
-                            .addComponent(btnMoveFirst)))
+                            .addComponent(jLabel6)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(5, 5, 5)
+                        .addComponent(lblPhoto)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rdoAvailable)
+                    .addComponent(rdoUnavailable))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreate)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
+                    .addComponent(btnClear)
+                    .addComponent(btnMoveLast)
+                    .addComponent(btnMoveNext)
+                    .addComponent(btnMovePrevious)
+                    .addComponent(btnMoveFirst))
                 .addContainerGap())
         );
 
@@ -562,11 +569,11 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblDrinksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDrinksMouseClicked
+    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             this.edit();}
-    }//GEN-LAST:event_tblDrinksMouseClicked
+    }//GEN-LAST:event_tblProductMouseClicked
 
     private void btnDeleteCheckedItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCheckedItemsActionPerformed
         // TODO add your handling code here:
@@ -627,6 +634,11 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
         // TODO add your handling code here:
         this.open();
     }//GEN-LAST:event_formWindowOpened
+
+    private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
+        // TODO add your handling code here:
+        this.fillToTable();
+    }//GEN-LAST:event_tblCategoriesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -699,7 +711,7 @@ public class ProductManagerJDialog extends javax.swing.JDialog implements Produc
     private javax.swing.JRadioButton rdoUnavailable;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblCategories;
-    private javax.swing.JTable tblDrinks;
+    private javax.swing.JTable tblProduct;
     private javax.swing.JSlider txtDiscount;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;
