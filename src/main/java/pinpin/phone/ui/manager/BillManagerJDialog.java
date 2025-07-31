@@ -4,6 +4,8 @@
  */
 package pinpin.phone.ui.manager;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -111,25 +113,37 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
     }
 
    
-    public void fillBillDetails() {
-        DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
-        model.setRowCount(0);
-        details = List.of();
-        if (!txtId.getText().isBlank()) {
-            Long billId = Long.valueOf(txtId.getText());
-            details = billDetailDao.findByBillId(billId);
-        }
-        details.forEach(d -> {
-            var amount = d.getUnitPrice() * d.getQuantity() * (1 - d.getDiscount());
-            Object[] rowData = {
-                d.getProductName(),
-                String.format("%.1f VNĐ", d.getUnitPrice()),
-                String.format("%.0f%%", d.getDiscount() * 100),
-                d.getQuantity(), String.format("%.1f VNĐ", amount)
-            };
-        model.addRow(rowData);
-        });
+public void fillBillDetails() {
+    DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
+    model.setRowCount(0);
+    details = List.of();
+
+    if (!txtId.getText().isBlank()) {
+        Long billId = Long.valueOf(txtId.getText());
+        details = billDetailDao.findByBillId(billId);
     }
+
+    for (var d : details) {
+        BigDecimal quantity = BigDecimal.valueOf(d.getQuantity());
+        BigDecimal hundred = BigDecimal.valueOf(100);
+
+        // amount = unitPrice * quantity * (1 - discount)
+        BigDecimal amount = d.getUnitPrice()
+                .multiply(quantity)
+                .multiply(BigDecimal.ONE.subtract(d.getDiscount()))
+                .setScale(1, RoundingMode.HALF_UP);
+
+        Object[] rowData = {
+            d.getProductName(),
+            String.format("%,.1f VNĐ", d.getUnitPrice()), // Định dạng có dấu phẩy ngăn cách
+            String.format("%.0f%%", d.getDiscount().multiply(hundred)),
+            d.getQuantity(),
+            String.format("%,.1f VNĐ", amount)
+        };
+
+        model.addRow(rowData);
+    }
+}
 
     
     public void create() {

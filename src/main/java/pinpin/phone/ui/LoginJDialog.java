@@ -67,8 +67,7 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pinpin/phone/image/anh-mo-ta.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pinpin/phone/image/Phông.jpg"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("ĐĂNG NHẬP");

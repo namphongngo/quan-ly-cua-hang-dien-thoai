@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pinpin.phone.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-/**
- *
- * @author Nam Phong
- */
+
+import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,9 +15,10 @@ public class BillDetail {
     private Long id;
     private Long billId;
     private String productId;
-    private double unitPrice;
-    private double discount;
+    private BigDecimal unitPrice;  // đổi từ double sang BigDecimal
+    private BigDecimal discount;   // đổi từ double sang BigDecimal
     private int quantity;
     
     private String productName;
 }
+

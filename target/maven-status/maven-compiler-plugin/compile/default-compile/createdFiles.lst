@@ -28,6 +28,7 @@ pinpin\phone\ui\LoginJDialog$2.class
 pinpin\phone\ui\manager\CardManagerJDialog$11.class
 pinpin\phone\ui\manager\BillManagerJDialog$13.class
 pinpin\phone\dao\impl\CardDAOImpl.class
+pinpin\phone\ui\ProductJDialog$5.class
 pinpin\phone\entity\Card.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$1.class
 pinpin\phone\ui\manager\UserManagerJDialog$14.class
@@ -111,6 +112,7 @@ pinpin\phone\ui\manager\CategoryManagerJDialog$9.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$14.class
 pinpin\phone\ui\manager\BillManagerJDialog$4.class
 pinpin\phone\ui\manager\ProductManagerJDialog$8.class
+pinpin\phone\ui\ProductJDialog$5$1.class
 pinpin\phone\ui\WelcomeJDialog$2$1.class
 pinpin\phone\ui\ChangePasswordController.class
 pinpin\phone\ui\manager\RevenueManagerJDialog$1.class
@@ -192,7 +194,6 @@ pinpin\phone\ui\PinPinPhoneJFrame$4.class
 pinpin\phone\ui\manager\CategoryManagerJDialog$4.class
 pinpin\phone\entity\BillDetail.class
 pinpin\phone\ui\PinPinPhoneJFrame$11.class
-pinpin\phone\ui\ProductJDialog$4$1.class
 pinpin\phone\ui\manager\UserManagerJDialog$10.class
 pinpin\phone\ui\manager\CardManagerJDialog$9.class
 pinpin\phone\ui\manager\BillManagerJDialog$5.class

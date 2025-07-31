@@ -23,7 +23,7 @@ public class XJdbc {
      */
     public static Connection openConnection() {
         var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    var dburl = "jdbc:sqlserver://localhost:1433;databaseName=PinPinPhone;encrypt=true;trustServerCertificate=true;";
+    var dburl = "jdbc:sqlserver://localhost:1433;databaseName=PinPinPhone;encrypt=false";
     var username = "sa";
     var password = "123";
 

@@ -12,30 +12,33 @@ public class BillDetailDAOImpl implements BillDetailDAO {
     }
 
     private static final String CREATE_SQL =
-        "INSERT INTO BillDetails(Id, BillId, DrinkId, UnitPrice, Discount, Quantity) VALUES(?, ?, ?, ?, ?, ?)";
+        "INSERT INTO BillDetails(BillId, ProductId, UnitPrice, Discount, Quantity) VALUES(?, ?, ?, ?, ?)";
 
     private static final String UPDATE_SQL =
-        "UPDATE BillDetails SET BillId=?, DrinkId=?, UnitPrice=?, Discount=?, Quantity=? WHERE Id=?";
+        "UPDATE BillDetails SET BillId=?, ProductId=?, UnitPrice=?, Discount=?, Quantity=? WHERE Id=?";
 
     private static final String DELETE_SQL =
         "DELETE FROM BillDetails WHERE Id=?";
 
     private static final String FIND_ALL_SQL =
-        "SELECT bd.*, d.Name AS DrinkName FROM BillDetails bd JOIN Drinks d ON d.Id = bd.DrinkId";
+        "SELECT bd.Id, bd.BillId, bd.ProductId, bd.UnitPrice, bd.Discount, bd.Quantity, p.Name AS ProductName " +
+        "FROM BillDetails bd JOIN Products p ON p.Id = bd.ProductId";
 
     private static final String FIND_BY_ID_SQL =
-        "SELECT bd.*, d.Name AS DrinkName FROM BillDetails bd JOIN Drinks d ON d.Id = bd.DrinkId WHERE bd.Id=?";
+        "SELECT bd.Id, bd.BillId, bd.ProductId, bd.UnitPrice, bd.Discount, bd.Quantity, p.Name AS ProductName " +
+        "FROM BillDetails bd JOIN Products p ON p.Id = bd.ProductId WHERE bd.Id=?";
 
     private static final String FIND_BY_BILL_ID_SQL =
-        "SELECT bd.*, d.Name AS DrinkName FROM BillDetails bd JOIN Drinks d ON d.Id = bd.DrinkId WHERE bd.BillId=?";
+        "SELECT bd.Id, bd.BillId, bd.ProductId, bd.UnitPrice, bd.Discount, bd.Quantity, p.Name AS ProductName " +
+        "FROM BillDetails bd JOIN Products p ON p.Id = bd.ProductId WHERE bd.BillId=?";
 
-    private static final String FIND_BY_DRINK_ID_SQL =
-        "SELECT bd.*, d.Name AS DrinkName FROM BillDetails bd JOIN Drinks d ON d.Id = bd.DrinkId WHERE bd.DrinkId=?";
+    private static final String FIND_BY_PRODUCT_ID_SQL =
+        "SELECT bd.Id, bd.BillId, bd.ProductId, bd.UnitPrice, bd.Discount, bd.Quantity, p.Name AS ProductName " +
+        "FROM BillDetails bd JOIN Products p ON p.Id = bd.ProductId WHERE bd.ProductId=?";
 
     @Override
     public BillDetail create(BillDetail entity) {
         Object[] values = {
-            entity.getId(),
             entity.getBillId(),
             entity.getProductId(),
             entity.getUnitPrice(),
@@ -81,7 +84,11 @@ public class BillDetailDAOImpl implements BillDetailDAO {
 
     @Override
     public List<BillDetail> findByProductId(String productId) {
-        return XQuery.getBeanList(BillDetail.class, FIND_BY_DRINK_ID_SQL, productId);
+        return XQuery.getBeanList(BillDetail.class, FIND_BY_PRODUCT_ID_SQL, productId);
     }
 }
+
+
+
+
 

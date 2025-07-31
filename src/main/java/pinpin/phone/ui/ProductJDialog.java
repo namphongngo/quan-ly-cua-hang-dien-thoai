@@ -4,6 +4,7 @@
  */
 package pinpin.phone.ui;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
      */
     public ProductJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.bill = bill; // gán lại
         initComponents();
     }
     
@@ -67,21 +69,24 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
             model.addRow(row);
         });
     }
+@Override
+public void addProductToBill() {
+    String quantity = XDialog.prompt("Số lượng?");
+    if(quantity != null && quantity.length() > 0){
+        Product product = products.get(tblProduct.getSelectedRow());
+        BillDetail detail = new BillDetail();
+        detail.setBillId(bill.getId());
 
-    @Override
-    public void addProductToBill() {
-        String quantity = XDialog.prompt("Số lượng?");
-        if(quantity != null && quantity.length() > 0){
-            Product product = products.get(tblProduct.getSelectedRow());
-            BillDetail detail = new BillDetail();
-            detail.setBillId(bill.getId());
-            detail.setDiscount(product.getDiscount());
-            detail.setProductId(product.getId());
-            detail.setQuantity(Integer.parseInt(quantity));
-            detail.setUnitPrice(product.getUnitPrice());
-            new BillDetailDAOImpl().create(detail);
-        }
+        // Chuyển double sang BigDecimal an toàn
+        detail.setDiscount(BigDecimal.valueOf(product.getDiscount()));
+        detail.setProductId(product.getId());
+        detail.setQuantity(Integer.parseInt(quantity));
+        detail.setUnitPrice(BigDecimal.valueOf(product.getUnitPrice()));
+
+        new BillDetailDAOImpl().create(detail);
     }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,7 +102,7 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
         tblProduct = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Sản Phẩm");
+        setTitle("Chọn Sản Phẩm");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -124,15 +129,23 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên sản phẩm", "Đơn giá", "Giảm giá"
+                "Mã", "Tên sản phẩm", "Đơn giá", "Giảm giá", ""
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProductMouseClicked(evt);
@@ -148,8 +161,8 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane4)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +189,7 @@ public class ProductJDialog extends javax.swing.JDialog implements ProductContro
 
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if(evt.getClickCount() == 1){
             this.addProductToBill();
         }
     }//GEN-LAST:event_tblProductMouseClicked
