@@ -4,12 +4,19 @@
  */
 package pinpin.phone.ui.manager;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import pinpin.phone.dao.CardDAO;
+import pinpin.phone.dao.impl.CardDAOImpl;
+import pinpin.phone.entity.Card;
+import pinpin.phone.util.XDialog;
 /**
  *
  * @author Nam Phong
  */
-public class CardManagerJDialog extends javax.swing.JDialog {
-
+public class CardManagerJDialog extends javax.swing.JDialog implements CardController{
+    CardDAO dao = new CardDAOImpl();
+    List<Card> items = List.of();
     /**
      * Creates new form CardManagerJDialog
      */
@@ -17,7 +24,158 @@ public class CardManagerJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    @Override
+    public void open() {
+        this.setLocationRelativeTo(null);
+        this.fillToTable();
+        this.clear();
+    }
 
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblCard.getModel();
+        model.setRowCount(0);
+        items = dao.findAll();
+        for (Card item : items) {
+            String status = switch (item.getStatus()) {
+                case 0 -> "Operating";
+                case 1 -> "Error";
+                case 2 -> "Lose";
+                default -> "Unknown";
+            };
+            model.addRow(new Object[]{item.getId(), status, Boolean.FALSE});
+        }
+    }
+
+    @Override
+    public void edit() {
+        int selectedRow = tblCard.getSelectedRow();
+        if (selectedRow >= 0 && selectedRow < items.size()) {
+            Card entity = items.get(selectedRow);
+            this.setForm(entity);
+            this.setEditable(true);
+            tabs.setSelectedIndex(1);
+        } else {
+            XDialog.alert("Vui lòng chọn một dòng hợp lệ!");
+        }
+    }
+
+    @Override public void checkAll() { this.setCheckedAll(true); }
+    @Override public void uncheckAll() { this.setCheckedAll(false); }
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblCard.getRowCount(); i++) {
+            tblCard.setValueAt(checked, i, 2);
+        }
+    }
+
+    @Override
+    public void deleteCheckedItems() {
+        if (XDialog.confirm("Bạn thực sự muốn xóa các mục chọn?")) {
+            for (int i = tblCard.getRowCount() - 1; i >= 0; i--) {
+                Boolean isChecked = (Boolean) tblCard.getValueAt(i, 2);
+                if (Boolean.TRUE.equals(isChecked)) {
+                    dao.deleteById(items.get(i).getId());
+                }
+            }
+            this.fillToTable();
+        }
+    }
+
+    @Override
+    public Card getForm() {
+        Card entity = new Card();
+        try {
+            entity.setId(Integer.valueOf(txtCard.getText().trim()));
+        } catch (NumberFormatException e) {
+            XDialog.alert("Mã thẻ không hợp lệ!");
+            return null;
+        }
+        if (rdoOperating.isSelected()) entity.setStatus(0);
+        else if (rdoError.isSelected()) entity.setStatus(1);
+        else if (rdoLose.isSelected()) entity.setStatus(2);
+        return entity;
+    }
+
+    @Override
+    public void setForm(Card entity) {
+        txtCard.setText(String.valueOf(entity.getId()));
+        switch (entity.getStatus()) {
+            case 0 -> rdoOperating.setSelected(true);
+            case 1 -> rdoError.setSelected(true);
+            case 2 -> rdoLose.setSelected(true);
+        }
+    }
+
+    @Override
+    public void create() {
+        Card entity = getForm();
+        if (entity != null) {
+            dao.create(entity);
+            this.fillToTable();
+            this.clear();
+        }
+    }
+
+    @Override
+    public void update() {
+        Card entity = getForm();
+        if (entity != null) {
+            dao.update(entity);
+            this.fillToTable();
+        }
+    }
+
+    @Override
+    public void delete() {
+        if (XDialog.confirm("Bạn thực sự muốn xóa?")) {
+            try {
+                int id = Integer.parseInt(txtCard.getText().trim());
+                dao.deleteById(id);
+                this.fillToTable();
+                this.clear();
+            } catch (NumberFormatException e) {
+                XDialog.alert("Mã thẻ không hợp lệ!");
+            }
+        }
+    }
+
+    @Override
+    public void clear() {
+        this.setForm(new Card());
+        this.setEditable(false);
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        txtCard.setEnabled(!editable);
+        btnCreate.setEnabled(!editable);
+        btnUpdate.setEnabled(editable);
+        btnDelete.setEnabled(editable);
+
+        boolean hasRows = tblCard.getRowCount() > 0;
+        btnMoveFirst.setEnabled(editable && hasRows);
+        btnMovePrevious.setEnabled(editable && hasRows);
+        btnMoveNext.setEnabled(editable && hasRows);
+        btnMoveLast.setEnabled(editable && hasRows);
+    }
+
+    @Override public void moveFirst() { this.moveTo(0); }
+    @Override public void movePrevious() { this.moveTo(tblCard.getSelectedRow() - 1); }
+    @Override public void moveNext() { this.moveTo(tblCard.getSelectedRow() + 1); }
+    @Override public void moveLast() { this.moveTo(tblCard.getRowCount() - 1); }
+    @Override
+    public void moveTo(int index) {
+        if (index < 0) {
+            this.moveLast();
+        } else if (index >= tblCard.getRowCount()) {
+            this.moveFirst();
+        } else {
+            tblCard.clearSelection();
+            tblCard.setRowSelectionInterval(index, index);
+            this.edit();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -410,51 +568,4 @@ public class CardManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtCard;
     // End of variables declaration//GEN-END:variables
 
-    private void edit() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void movePrevious() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void moveNext() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void moveLast() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void update() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void create() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void checkAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void uncheckAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void deleteCheckedItems() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void moveFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

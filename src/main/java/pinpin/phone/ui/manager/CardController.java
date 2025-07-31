@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package pinpin.phone.ui.manager;
-
+import pinpin.phone.entity.Card;
 /**
  *
  * @author Nam Phong
  */
-public interface CardController {
+public interface CardController extends CrudController<Card>{
     
 }
