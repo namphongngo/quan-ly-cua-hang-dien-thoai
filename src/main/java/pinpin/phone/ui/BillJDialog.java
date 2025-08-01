@@ -4,7 +4,7 @@
  */
 package pinpin.phone.ui;
 
-
+import java.math.BigDecimal;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,20 +60,29 @@ import pinpin.phone.util.XDialog;
     }
     
     void fillBillDetails() {
-        DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
-        model.setRowCount(0);
-        billDetails.forEach(d -> {
-            Object[] row = {false,
-                d.getId(),
-                d.getProductName(),
-                String.format("$%.2f", d.getUnitPrice()),
-                String.format("%.0f%%", d.getDiscount() * 100),
-                d.getQuantity(),
-                String.format("$%.2f", d.getQuantity() * d.getUnitPrice() * (1 - d.getDiscount()))
-            };
-            model.addRow(row);
-        });
-    }
+    DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
+    model.setRowCount(0);
+
+    billDetails.forEach(d -> {
+        Object[] row = {
+            false,
+            d.getId(),
+            d.getProductName(),
+            String.format("$%.2f", d.getUnitPrice()),
+            String.format("%.0f%%", d.getDiscount().multiply(BigDecimal.valueOf(100)).doubleValue()),
+            d.getQuantity(),
+            String.format("$%.2f",
+                BigDecimal.valueOf(d.getQuantity())
+                    .multiply(d.getUnitPrice())
+                    .multiply(BigDecimal.ONE.subtract(d.getDiscount()))
+                    .doubleValue()
+            )
+        };
+        model.addRow(row);
+    });
+}
+
+
 
     @Override
     public void removeProducts() { // xóa đồ uống được tích chọn
