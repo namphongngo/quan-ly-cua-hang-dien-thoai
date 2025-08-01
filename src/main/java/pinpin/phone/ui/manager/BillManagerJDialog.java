@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package pinpin.phone.ui.manager;
-
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -112,24 +112,32 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
 
    
     public void fillBillDetails() {
-        DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
-        model.setRowCount(0);
-        details = List.of();
-        if (!txtId.getText().isBlank()) {
-            Long billId = Long.valueOf(txtId.getText());
-            details = billDetailDao.findByBillId(billId);
-        }
-        details.forEach(d -> {
-            var amount = d.getUnitPrice() * d.getQuantity() * (1 - d.getDiscount());
-            Object[] rowData = {
-                d.getProductName(),
-                String.format("%.1f VNĐ", d.getUnitPrice()),
-                String.format("%.0f%%", d.getDiscount() * 100),
-                d.getQuantity(), String.format("%.1f VNĐ", amount)
-            };
-        model.addRow(rowData);
-        });
+    DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
+    model.setRowCount(0);
+
+    details = List.of();  // hoặc khởi tạo rỗng
+    if (!txtId.getText().isBlank()) {
+        Long billId = Long.valueOf(txtId.getText());
+        details = billDetailDao.findByBillId(billId);
     }
+
+    details.forEach(d -> {
+        BigDecimal amount = d.getUnitPrice()
+            .multiply(BigDecimal.valueOf(d.getQuantity()))
+            .multiply(BigDecimal.ONE.subtract(d.getDiscount()));
+
+        Object[] rowData = {
+            d.getProductName(),
+            String.format("%.1f VND", d.getUnitPrice().doubleValue()),
+            String.format("%.0f%%", d.getDiscount().multiply(BigDecimal.valueOf(100)).doubleValue()),
+            d.getQuantity(),
+            String.format("%.1f VND", amount.doubleValue())
+        };
+
+        model.addRow(rowData);
+    });
+}
+
 
     
     public void create() {
