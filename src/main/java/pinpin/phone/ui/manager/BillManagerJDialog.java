@@ -4,8 +4,6 @@
  */
 package pinpin.phone.ui.manager;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -113,37 +111,25 @@ public class BillManagerJDialog extends javax.swing.JDialog implements BillContr
     }
 
    
-public void fillBillDetails() {
-    DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
-    model.setRowCount(0);
-    details = List.of();
-
-    if (!txtId.getText().isBlank()) {
-        Long billId = Long.valueOf(txtId.getText());
-        details = billDetailDao.findByBillId(billId);
-    }
-
-    for (var d : details) {
-        BigDecimal quantity = BigDecimal.valueOf(d.getQuantity());
-        BigDecimal hundred = BigDecimal.valueOf(100);
-
-        // amount = unitPrice * quantity * (1 - discount)
-        BigDecimal amount = d.getUnitPrice()
-                .multiply(quantity)
-                .multiply(BigDecimal.ONE.subtract(d.getDiscount()))
-                .setScale(1, RoundingMode.HALF_UP);
-
-        Object[] rowData = {
-            d.getProductName(),
-            String.format("%,.1f VNĐ", d.getUnitPrice()), // Định dạng có dấu phẩy ngăn cách
-            String.format("%.0f%%", d.getDiscount().multiply(hundred)),
-            d.getQuantity(),
-            String.format("%,.1f VNĐ", amount)
-        };
-
+    public void fillBillDetails() {
+        DefaultTableModel model = (DefaultTableModel) tblBillDetails.getModel();
+        model.setRowCount(0);
+        details = List.of();
+        if (!txtId.getText().isBlank()) {
+            Long billId = Long.valueOf(txtId.getText());
+            details = billDetailDao.findByBillId(billId);
+        }
+        details.forEach(d -> {
+            var amount = d.getUnitPrice() * d.getQuantity() * (1 - d.getDiscount());
+            Object[] rowData = {
+                d.getProductName(),
+                String.format("%.1f VNĐ", d.getUnitPrice()),
+                String.format("%.0f%%", d.getDiscount() * 100),
+                d.getQuantity(), String.format("%.1f VNĐ", amount)
+            };
         model.addRow(rowData);
+        });
     }
-}
 
     
     public void create() {
@@ -463,8 +449,10 @@ public void fillBillDetails() {
         jLabel8.setText("Trạng thái");
 
         rdoServicing.setText("Servicing");
+        rdoServicing.setActionCommand("Canceled");
 
         rdoCompleted.setText("Completed");
+        rdoCompleted.setActionCommand("Canceled");
 
         rdoCanceled.setText("Canceled");
 
@@ -547,7 +535,8 @@ public void fillBillDetails() {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCreate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate)
@@ -555,21 +544,18 @@ public void fillBillDetails() {
                         .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClear)
-                        .addGap(87, 87, 87)
-                        .addComponent(btnMoveFirst)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMovePrevious)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMoveNext)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMoveLast)
-                        .addGap(0, 30, Short.MAX_VALUE))
+                        .addGap(71, 71, 71)
+                        .addComponent(btnMoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMovePrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMoveNext, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMoveLast, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -578,7 +564,7 @@ public void fillBillDetails() {
                                     .addComponent(txtCheckin, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                                     .addComponent(txtId)
                                     .addComponent(txtUsername))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(80, 80, 80)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtCardId)
@@ -591,8 +577,9 @@ public void fillBillDetails() {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(rdoCompleted, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(rdoCanceled, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(108, 108, 108))))
+                                        .addComponent(rdoCanceled, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
